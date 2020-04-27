@@ -1,17 +1,20 @@
 require('dotenv').config()
 const express = require('express');
+const server = express();
 const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
 const logger = require('../middleware/logger');
 
-const server = express();
+const authRouter = require('../api/auth/authRouter');
 
 server.use(cors());
 server.use(helmet())
 server.use(logger)
 server.use(morgan('short'))
 server.use(express.json());
+
+server.use('/api/auth', authRouter);
 
 server.use('/', (req, res) => {
   res.status(200).json({ message: 'Server is Live' })
