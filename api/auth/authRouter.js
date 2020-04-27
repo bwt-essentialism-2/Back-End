@@ -2,7 +2,7 @@ const router = require('express').Router();
 const Users = require('../users/usersModel');
 const bcrypt = require('bcrypt');
 const jwt = require("jsonwebtoken");
-const secret = require("../secret");
+const secrets = require('../secret');
 
 router.post('/register', newUserVerification, (req, res) => {
   const user = req.body;
@@ -20,6 +20,7 @@ router.post('/register', newUserVerification, (req, res) => {
 
 router.post('/login', (req, res) => {
   let { username, password } = req.body;
+  console.log('pinged')
   Users.findBy({ username })
     .then(([user]) => {
       if (user && bcrypt.compareSync(password, user.password)) {
@@ -50,7 +51,7 @@ function generateToken(user) {
     userId: user.id,
     username: user.username,
   };
-  const secret = secret.jwtSecret;
+  const secret = secrets.jwtSecret;
   const options = {
     expiresIn: "1d",
   };
