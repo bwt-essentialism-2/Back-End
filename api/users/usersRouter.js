@@ -10,4 +10,6 @@ router.get('/', (req, res) => {
 		.catch(err => res.send(err));
 });
 
+
+router.delete('/')
 module.exports = router;
