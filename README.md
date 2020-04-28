@@ -1,18 +1,4 @@
 # Back-End
 
-Register:
-https://essentialism-bwt.herokuapp.com/api/auth/register
-
-json required:
-{
- username: "",
- password: ""
-}
-
-Login:
-https://essentialism-bwt.herokuapp.com/api/auth/login
-
-Test account {
- username: 'Test'
- password: 'Test'
-}
+Endpoint Documentation:
+https://documenter.getpostman.com/view/10614826/SzfDwjom?version=latest
