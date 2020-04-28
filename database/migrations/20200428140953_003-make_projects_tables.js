@@ -6,6 +6,12 @@ exports.up = function(knex) {
       tbl.string('name', 128).notNullable().index();
       tbl.text('description');
       tbl.boolean('project_status').notNullable().defaultTo(false)
+      tbl.integer('user_id')
+        .unsigned()
+        .notNullable()
+        .references('Users.id')
+        .onDelete('CASCADE')
+        .onUpdate('CASCADE')
     })
 
     .createTable('User_Projects', tbl => {
@@ -41,10 +47,27 @@ exports.up = function(knex) {
         .onDelete('CASCADE')
         .onUpdate('CASCADE')
     })
+
+    .createTable('Essential_Values', tbl => {
+      tbl.increments('id').primary();
+      tbl.integer('essential_id', 128).notNullable()
+      .unsigned()
+      .notNullable()
+      .references('Essentials.id')
+      .onDelete('CASCADE')
+      .onUpdate('CASCADE')
+    tbl.integer('value_id')
+      .unsigned()
+      .notNullable()
+      .references('Values.id')
+      .onDelete('CASCADE')
+      .onUpdate('CASCADE')
+    })
 };
 
 exports.down = function(knex) {
   return knex.schema
+    .dropTableIfExists('Essential_Values')
     .dropTableIfExists('Essentials')
     .dropTableIfExists('User_Projects')
     .dropTableIfExists('Projects')
