@@ -3,13 +3,13 @@ exports.up = function(knex) {
   return knex.schema
     .createTable('Values', tbl => {
       tbl.increments('id').primary();
-      tbl.string('name', 128).notNullable().index();
+      tbl.string('value', 128).notNullable().index();
       tbl.text('description');
     })
 
-    .createTable('User_Values', () => {
+    .createTable('User_Values', tbl => {
       tbl.increments('id').primary();
-      tbl.string('value_id', 128).notNullable()
+      tbl.integer('value_id', 128).notNullable()
       .unsigned()
       .notNullable()
       .references('Users.id')
