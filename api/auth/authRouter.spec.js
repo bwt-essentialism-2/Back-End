@@ -1,12 +1,12 @@
 const server = require('../server.js');
 const request = require('supertest');
-const knex = require('../../database/dbConfig.js');
+const knex = require('../../database/dbConfig.js');//brought in database to delete repeating users being called
 //req.body -> username/pass
 //should return 201 status 
 //should return user object in res.body
 describe('should register user', () => {
-    let response;
-    const user = {
+    let response;//used to set real response to
+    const user = {//user object to post in request
         username: "david",
         password: "abc123"
     }
@@ -24,7 +24,7 @@ describe('should register user', () => {
     //         })
     // })
 
-    beforeEach(async () => {
+    beforeEach(async () => {//had to use async/await in order to send request
 
         const _ = await knex('Users').where({username: user.username}).del()
         response = await request(server)
