@@ -8,7 +8,7 @@ const logger = require('../middleware/logger');
 
 const authRouter = require('./auth/authRouter');
 const usersRouter = require('./users/usersRouter');
-const valuesRouter = require('./users/values/valuesRouter');
+const valuesRouter = require('./values/valuesRouter');
 
 server.use(cors());
 server.use(helmet())
