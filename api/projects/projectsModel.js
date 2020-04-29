@@ -25,7 +25,7 @@ function update(id, changes) {
   return db('Projects')
     .where('id', id)
     .update(changes)
-    .then((count) => (count > 0 ? get(id) : null));
+    .then(count => (count > 0 ? findById(id) : null));
 }
 
 function remove(id) {

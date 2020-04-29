@@ -16,7 +16,7 @@ router.get('/:id', projectware.projectExist, (req, res) => {
 })
 
 // Edit Project
-// router.put('/:id', projectware.validateProject, (req, res) => {
+// router.put('/:id', projectware.editProject, (req, res) => {
 //   Project.update(req.params.id, req.body)
 //     .then(items => res.status(200).json(items))
 //     .catch(err => res.status(500).json({ errorMessage: `There was a error while retrieving Project.`, err }))

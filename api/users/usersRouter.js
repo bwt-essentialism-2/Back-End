@@ -26,9 +26,19 @@ router.get('/:id/projects', userware.verifyUser, (req, res) => {
 		.catch(err => res.status(500).json({ errorMessage: `Internal server error`, err }))
 })
 
-// Creates projects by automatically taking in user id
+// Creates projects by automatically taking in user ID
 router.post('/:id/projects', userware.verifyUser, projectware.validateNewProject, (req, res) => {
 	res.status(201).json({ message: `Project was created successfully`})
+})
+
+// Edit Project by automatically taking in User ID & project ID
+router.put('/:id/projects/:pid', userware.verifyUser, projectware.projectExist, projectware.editProject, (req, res) => {
+  res.status(201).json(req.project)
+})
+
+// Deletes Project by automatically taking in User ID & project ID
+router.delete('/:id/projects/:pid', userware.verifyUser, projectware.projectExist, projectware.editProject, (req, res) => {
+  res.status(201).json(req.project)
 })
 
 router.delete('/')
