@@ -25,8 +25,10 @@ function update(id, changes) {
     .then(count => (count > 0 ? findById(id) : null));
 }
 
-function remove(id) {
-  return db('Values').where('id', id).del();
+function remove(id){
+  return db('Values')
+      .where({id: id})
+      .del()
 }
 
 module.exports = {
