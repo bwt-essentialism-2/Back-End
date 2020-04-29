@@ -2,7 +2,7 @@ const Project = require('./projectsModel');
 
 const validateProject = (req, res, next) => {
   const item = req.body
-  if(item.notes.length && item.description.length) {
+  if(item.name && item.user_id) {
     Project.add({
       name: item.name,
       description: item.description,
@@ -24,7 +24,7 @@ const projectExist = (req, res, next) => {
   Project.findById(req.params.id)
     .then(project => {
       if (project) {
-        req.proj = project
+        req.project = project
         next()
       } else {
         res.status(401).json({ errorMessage: `project by ${id} doesn't exist` })
