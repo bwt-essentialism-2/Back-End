@@ -18,9 +18,22 @@ const add = async (payload) => {
   return findById(id)
 }
 
+function update(id, changes) {
+  return db('Values')
+    .where('id', id)
+    .update(changes)
+    .then(count => (count > 0 ? findById(id) : null));
+}
+
+function remove(id) {
+  return db('Values').where('id', id).del();
+}
+
 module.exports = {
   find,
   findBy,
   findById,
   add,
+  update,
+  remove,
 }

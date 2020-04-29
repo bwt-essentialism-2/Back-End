@@ -22,5 +22,16 @@ router.post('/', (req,res) =>{
 			res.status(500).json(err)
 		})
 })
+
+router.put('/:id', (req,res) => {
+	const id = req.params.id;
+	Values.update(id, req.body)
+		.then(res => {
+			res.status(200).json(res)
+		})
+		.catch(err => {
+			res.status(500).json(err)
+		})
+})
 // router.delete('/')
 module.exports = router;
