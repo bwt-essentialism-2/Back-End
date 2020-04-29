@@ -3,14 +3,14 @@ const Project = require('./projectsModel');
 // makes sure a project exist before next()
 const projectExist = (req, res, next) => {
 	const { id, pid } = req.params;
-	Project.findById(id || pid).then(project => {
+	Project.findById(pid).then(project => {
 		if (project) {
 			req.project = project;
 			next();
 		} else {
 			res
 				.status(401)
-				.json({ errorMessage: `project by ${id ? id : pid} doesn't exist` });
+				.json({ errorMessage: `project by ${pid} doesn't exist` });
 		}
 	});
 };
@@ -18,7 +18,7 @@ const projectExist = (req, res, next) => {
 // verifys a new project has the correct data before adding to DB
 const validateNewProject = (req, res, next) => {
 	const item = req.body;
-	const id = req.params.id;
+	const { id } = req.params;
 	const projectPrint = {
 		name: '',
 		description: '',

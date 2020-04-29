@@ -16,11 +16,11 @@ router.get('/', (req, res) => {
 })
 
 // retrieve essentials by ID
-router.get('/:id', essentialware.essentialExist, (req, res) => {
+router.get('/:eid', essentialware.essentialExist, (req, res) => {
   res.status(200).json(req.essential)
 })
 
-router.delete('/:id', essentialware.essentialExist, (req, res) => {
+router.delete('/:eid', essentialware.essentialExist, (req, res) => {
   Essentials.remove(req.params.id)
     .then(() => {
       res.status(204).json({ message: `essential was deleted successfully` })
