@@ -36,11 +36,5 @@ router.put('/:id/projects/:pid', userware.verifyUser, projectware.projectExist, 
   res.status(201).json(req.project)
 })
 
-// Deletes Project by automatically taking in User ID & project ID
-// router.delete('/:id/projects/:pid', userware.verifyUser, projectware.projectExist, (req, res) => {
-// 	Projects.remove(pid)
-// 	res.status(201).json(req.project)
-// })
-
 router.delete('/')
 module.exports = router;
