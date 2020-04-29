@@ -11,8 +11,16 @@ router.get('/', (req, res) => {
 });
 
 // //todo 
-// router.put('/')
-
-
+router.post('/', (req,res) =>{
+	console.log("req.body: ",req.body)
+	Values.add(req.body)
+		.then(res => {
+			res.status(201).json(res)
+		})
+		.catch(err => {
+			console.error(err)
+			res.status(500).json(err)
+		})
+})
 // router.delete('/')
 module.exports = router;
