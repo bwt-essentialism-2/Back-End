@@ -2,7 +2,7 @@
 exports.up = function(knex) {
   return knex.schema
     .createTable('Users', tbl => {
-      tbl.increments();
+      tbl.increments().primary();
 
       tbl
         .string('username', 255)

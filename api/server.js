@@ -11,6 +11,7 @@ const authRouter = require('./auth/authRouter');
 const usersRouter = require('./users/usersRouter');
 const valuesRouter = require('./values/valuesRouter');
 const projectsRouter = require('./projects/projectsRouter');
+const essentialsRouter = require('./essentials/essentialsRouter');
 
 server.use(cors());
 server.use(helmet())
@@ -28,6 +29,7 @@ process.env.DB_ENV === 'production' ? server.use(authentication) : null
 server.use('/api/users', usersRouter);
 server.use('/api/values', valuesRouter);
 server.use('/api/projects', projectsRouter);
+server.use('/api/essentials', essentialsRouter);
 
 server.use('/', (req, res) => {
   res.status(200).json({ message: 'Server is Live' })
