@@ -73,7 +73,7 @@ router.put('/:id/projects/:pid/essentials/:eid', userware.verifyUser, projectwar
 router.delete('/:id/projects/:pid/essentials/:eid', userware.verifyUser, projectware.projectExist, essentialware.essentialExist, (req, res) => {
   Essentials.remove(req.params.eid)
     .then(() => {
-      res.status(204).json({ message: `project was deleted successfully` })
+      res.status(204).json({ message: `essential was deleted successfully` })
     })
     .catch(err => res.status(500).json({ errorMessage: `Internal server error`, err }))
 })
