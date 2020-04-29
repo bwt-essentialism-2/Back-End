@@ -62,14 +62,17 @@ router.get('/:id/project/:pid/essentials/:eid', userware.verifyUser, projectware
 		})
 })
 
+// Creates a new essential taking in UserID and projectID
 router.post('/:id/projects/:pid/essentials/', userware.verifyUser, projectware.projectExist, essentialware.validateNewEssential, (req, res) => {
 	res.status(201).json({ message: `essential was created successfully`, essential: req.essential })
 })
 
+// Edits a essential taking in UserID, project ID and Essential ID
 router.put('/:id/projects/:pid/essentials/:eid', userware.verifyUser, projectware.projectExist, essentialware.editEssential, (req, res) => {
 	res.status(201).json({ message: `essential was created successfully`, essential: req.essential })
 })
 
+// Deletes a essential verifying its tied to a userid, projectID and the essential ID exist
 router.delete('/:id/projects/:pid/essentials/:eid', userware.verifyUser, projectware.projectExist, essentialware.essentialExist, (req, res) => {
   Essentials.remove(req.params.eid)
     .then(() => {
