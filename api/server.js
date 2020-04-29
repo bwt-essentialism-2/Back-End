@@ -23,7 +23,8 @@ server.use(express.json());
 server.use('/api/auth', authRouter);
 
 // JWT required beyond here
-process.env.DB_ENV === 'production' ? server.use(authentication) : null
+// process.env.DB_ENV === 'production' ? server.use(authentication) : null
+server.use(authentication)
 
 // Endpoints
 server.use('/api/users', usersRouter);

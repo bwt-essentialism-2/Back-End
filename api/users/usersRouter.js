@@ -15,7 +15,8 @@ router.get('/', (req, res) => {
 		.catch(err => res.status(500).json({ errorMessage: `Internal server error`, err }))
 });
 
-router.get('/:id', userware.verifyUser, (req, res) => {
+// retrieves user by tokenID
+router.get('/id', userware.verifyUser, (req, res) => {
 	res.status(200).json(req.user)
 });
 
@@ -24,8 +25,8 @@ router.get('/:id', userware.verifyUser, (req, res) => {
 ******************************************************************************************/
 
 // retrieves all Projects for a Users ID
-router.get('/:id/projects', userware.verifyUser, (req, res) => {
-  Projects.findByUserId(req.params.id)
+router.get('/projects', userware.verifyUser, (req, res) => {
+  Projects.findByUserId(req.user.id)
     .then(projects => {
       res.status(200).json(projects)
 		})
@@ -33,12 +34,12 @@ router.get('/:id/projects', userware.verifyUser, (req, res) => {
 })
 
 // Creates projects by automatically taking in user ID
-router.post('/:id/projects', userware.verifyUser, projectware.validateNewProject, (req, res) => {
+router.post('/projects', userware.verifyUser, projectware.validateNewProject, (req, res) => {
 	res.status(201).json({ message: `Project was created successfully`})
 })
 
 // Edit Project by automatically taking in User ID & project ID
-router.put('/:id/projects/:pid', userware.verifyUser, projectware.projectExist, projectware.editProject, (req, res) => {
+router.put('/projects/:pid', userware.verifyUser, projectware.projectExist, projectware.editProject, (req, res) => {
   res.status(201).json(req.project)
 })
 
@@ -47,7 +48,7 @@ router.put('/:id/projects/:pid', userware.verifyUser, projectware.projectExist, 
 ******************************************************************************************/
 
 // returns all essentials for a user's project
-router.get('/:id/project/:pid/essentials/', userware.verifyUser, projectware.projectExist, (req, res) => {
+router.get('/project/:pid/essentials/', userware.verifyUser, projectware.projectExist, (req, res) => {
 	Essentials.findBy({ project_id: req.params.pid })
 		.then(ess => {
 			res.status(200).json(ess)
@@ -55,7 +56,7 @@ router.get('/:id/project/:pid/essentials/', userware.verifyUser, projectware.pro
 })
 
 // returns a specific essential for a user's project ID
-router.get('/:id/project/:pid/essentials/:eid', userware.verifyUser, projectware.projectExist, essentialware.essentialExist, (req, res) => {
+router.get('/project/:pid/essentials/:eid', userware.verifyUser, projectware.projectExist, essentialware.essentialExist, (req, res) => {
 	Essentials.findBy({ project_id: req.params.pid })
 		.then(ess => {
 			res.status(200).json(ess)
@@ -63,17 +64,17 @@ router.get('/:id/project/:pid/essentials/:eid', userware.verifyUser, projectware
 })
 
 // Creates a new essential taking in UserID and projectID
-router.post('/:id/projects/:pid/essentials/', userware.verifyUser, projectware.projectExist, essentialware.validateNewEssential, (req, res) => {
+router.post('/projects/:pid/essentials/', userware.verifyUser, projectware.projectExist, essentialware.validateNewEssential, (req, res) => {
 	res.status(201).json({ message: `essential was created successfully`, essential: req.essential })
 })
 
 // Edits a essential taking in UserID, project ID and Essential ID
-router.put('/:id/projects/:pid/essentials/:eid', userware.verifyUser, projectware.projectExist, essentialware.editEssential, (req, res) => {
+router.put('/projects/:pid/essentials/:eid', userware.verifyUser, projectware.projectExist, essentialware.editEssential, (req, res) => {
 	res.status(201).json({ message: `essential was created successfully`, essential: req.essential })
 })
 
 // Deletes a essential verifying its tied to a userid, projectID and the essential ID exist
-router.delete('/:id/projects/:pid/essentials/:eid', userware.verifyUser, projectware.projectExist, essentialware.essentialExist, (req, res) => {
+router.delete('/projects/:pid/essentials/:eid', userware.verifyUser, projectware.projectExist, essentialware.essentialExist, (req, res) => {
   Essentials.remove(req.params.eid)
     .then(() => {
       res.status(204).json({ message: `essential was deleted successfully` })

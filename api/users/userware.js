@@ -2,8 +2,8 @@ const User = require('./usersModel');
 
 // makes sure a user exist before next()
 const verifyUser = (req, res, next) => {
-  const id = req.params.id
-  User.findById(req.params.id)
+  const id = req.tk.userId
+  User.findById(id)
     .then(user => {
       if (user) {
         req.user = user

@@ -18,7 +18,7 @@ const projectExist = (req, res, next) => {
 // verifys a new project has the correct data before adding to DB
 const validateNewProject = (req, res, next) => {
 	const item = req.body;
-	const { id } = req.params;
+	const { id } = req.user;
 	const projectPrint = {
 		name: '',
 		description: '',
@@ -52,7 +52,7 @@ const validateNewProject = (req, res, next) => {
 
 const editProject = (req, res, next) => {
 	const item = req.body;
-	const { id, pid } = req.params;
+	const { pid } = req.params;
 
 	if (pid) {
 		Project.update(pid, item)
