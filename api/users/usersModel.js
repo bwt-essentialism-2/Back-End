@@ -17,9 +17,15 @@ const add = async (payload) => {
   [id] = await db('Users').insert(payload, 'id')
   return findById(id)
 }
+
+//function to assign values to user
+const saveValueToUser = () => {
+  return {};
+} 
 module.exports = {
   find,
   findBy,
   findById,
   add,
+  saveValueToUser,
 }

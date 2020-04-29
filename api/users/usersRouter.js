@@ -36,5 +36,12 @@ router.put('/:id/projects/:pid', userware.verifyUser, projectware.projectExist, 
   res.status(201).json(req.project)
 })
 
+//post to store what users' 3 values are
+router.post('/:id/values', (req,res) =>{
+	const user_id = req.params.id;
+	//body
+
+})
+
 router.delete('/')
 module.exports = router;

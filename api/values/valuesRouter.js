@@ -24,11 +24,6 @@ router.post('/', (req,res) =>{
     })
 })
 
-//post to store what users' 3 values are
-router.post('/:id', (req,res) =>{
-
-})
-
 router.put('/:id', (req,res) => {
 	const id = req.params.id;
 	Values.update(id, req.body)
