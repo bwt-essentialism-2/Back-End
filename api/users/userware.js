@@ -1,5 +1,6 @@
 const User = require('./usersModel');
 
+// makes sure a user exist before next()
 const verifyUser = (req, res, next) => {
   const id = req.params.id
   User.findById(req.params.id)

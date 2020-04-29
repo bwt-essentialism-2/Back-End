@@ -15,17 +15,12 @@ router.get('/:id', projectware.projectExist, (req, res) => {
       res.status(200).json(req.project)
 })
 
-// Create Project
-// router.post('/', userware.userExist, projectware.validateProject, (req, res) => {
-//   res.status(201).json(req.project)
-// })
-
 // Edit Project
-router.put('/:id', projectware.validateProject, (req, res) => {
-  Project.update(req.params.id, req.body)
-    .then(items => res.status(200).json(items))
-    .catch(err => res.status(500).json({ errorMessage: `There was a error while retrieving Project.`, err }))
-})
+// router.put('/:id', projectware.validateProject, (req, res) => {
+//   Project.update(req.params.id, req.body)
+//     .then(items => res.status(200).json(items))
+//     .catch(err => res.status(500).json({ errorMessage: `There was a error while retrieving Project.`, err }))
+// })
 
 // Delete Project
 router.delete('/:id', (req, res) => {
