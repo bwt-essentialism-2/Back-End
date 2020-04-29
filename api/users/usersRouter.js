@@ -4,6 +4,8 @@ const Users = require('./usersModel.js');
 const userware = require('./userware');
 const Projects = require('../projects/projectsModel');
 const projectware = require('../projects/projectware');
+const Essentials = require('../essentials/essentialsModel');
+const essentialware = require('../essentials/essentialware');
 
 router.get('/', (req, res) => {
 	Users.find()
@@ -16,6 +18,10 @@ router.get('/', (req, res) => {
 router.get('/:id', userware.verifyUser, (req, res) => {
 	res.status(200).json(req.user)
 });
+
+/*****************************************************************************************
+***************************** USER PRIVATE PROJECTS ROUTER *******************************
+******************************************************************************************/
 
 // retrieves all Projects for a Users ID
 router.get('/:id/projects', userware.verifyUser, (req, res) => {
@@ -36,5 +42,13 @@ router.put('/:id/projects/:pid', userware.verifyUser, projectware.projectExist, 
   res.status(201).json(req.project)
 })
 
-router.delete('/')
+/*****************************************************************************************
+***************************** USER PRIVATE ESSENTIALS ROUTER *****************************
+******************************************************************************************/
+
+router.post('/:id/projects/:pid/essentials/', userware.verifyUser, projectware.projectExist, essentialware.validateNewEssential, (req, res) => {
+	res.status(201).json({ message: `essential was created successfully`, essential: req.essential })
+})
+
+
 module.exports = router;

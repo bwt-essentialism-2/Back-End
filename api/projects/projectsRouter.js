@@ -14,12 +14,12 @@ router.get('/', (req, res) => {
 })
 
 // retrieve project by ID
-router.get('/:id', projectware.projectExist, (req, res) => {
+router.get('/:pid', projectware.projectExist, (req, res) => {
       res.status(200).json(req.project)
 })
 
 // Delete Project
-router.delete('/:id', projectware.projectExist, (req, res) => {
+router.delete('/:pid', projectware.projectExist, (req, res) => {
   Projects.remove(req.params.id)
     .then(() => {
       res.status(204).json({ message: `project was deleted successfully` })
