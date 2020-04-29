@@ -25,7 +25,6 @@ router.delete('/:pid', projectware.projectExist, (req, res) => {
       res.status(204).json({ message: `project was deleted successfully` })
     })
     .catch(err => res.status(500).json({ errorMessage: `Internal server error`, err }))
-	
 })
 
 module.exports = router;

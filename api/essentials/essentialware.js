@@ -52,7 +52,30 @@ const validateNewEssential = (req, res, next) => {
 	}
 };
 
+const editEssential = (req, res, next) => {
+	const item = req.body;
+	const { id, pid, eid } = req.params;
+
+	if (pid) {
+		Essential.update(eid, item)
+			.then(essential => {
+				req.essential = essential;
+				next();
+			})
+			.catch(err =>
+				res
+					.status(500)
+					.json({ errorMessage: `Error editing essential on server end.`, err })
+			);
+	} else {
+		res
+			.status(404)
+			.json({ errorMessage: `request must contain name, and user_id field.` });
+	}
+};
+
 module.exports = {
 	essentialExist,
 	validateNewEssential,
+	editEssential
 };
