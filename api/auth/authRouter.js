@@ -43,6 +43,8 @@ function newUserVerification(req, res, next) {
 
   if((user.username && user.password) && (user.username.length > 3 && user.password.length > 5)) {
     next()
+  } else {
+    res.status(401).json({ errorMessage: `Invalid attempt. username must contain atleast 3 characters & password must be more then 5` })
   }
 }
 
