@@ -7,8 +7,7 @@
     "server": "nodemon index.js",
     "start": "node index.js",
     "test": "cross-env DB_ENV=testing jest --watch",
-    "test2": "jest --watch",
-    "knex": "knex"
+    "test2": "jest --watch"
   },
   "repository": {
     "type": "git",
