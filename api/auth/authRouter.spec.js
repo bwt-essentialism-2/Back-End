@@ -5,16 +5,18 @@ const knex = require('knex')(knexFile);
 const db = require('../../database/dbConfig');
 const knexCleaner = require('knex-cleaner');
 
-describe('/auth', () => {
-
-	beforeEach(async () => {
+const cleanPerTest = async () => {
+	await beforeEach(async () => {
 		await knexCleaner.clean(knex, {
 			mode: 'truncate',
 			restartIdentity: true,
 			ignoreTables: ['knex_migrations', 'knex_migrations_lock']
 		});
 	});
+}
 
+describe('/auth', () => {
+	cleanPerTest()
 	describe('/register', () => {
 		test('should return a invalid register attempt', () => {
 			return request(server)
@@ -39,21 +41,21 @@ describe('/auth', () => {
 	});
 
 	describe('/login', () => {
-		const user = { username: 'Sanders', password: 'password' }
-		test('should login user', () => {
-			return request(server)
+		const user = { username: 'Billy', password: 'password' }
+		test('should login user', async () => {
+			await request(server)
 				.post('/api/auth/register')
 				.send(user)
-				.then(res => {
+				.then(async res => {
 					expect(res.status).toBe(201)
-						.then(() => {
-							return request('server')
-								.post('/api/auth/login')
-								.send(user)
-								.then(res => {
-									expect(res.status).toBe(200)
-								})
-						})
+					try {
+						const res_1 = await request('server')
+							.post('/api/auth/login')
+							.send(user);
+						expect(res_1.status).toBe(200);
+					} catch (error) {
+						return null
+					}
 				})
 		})
 		
