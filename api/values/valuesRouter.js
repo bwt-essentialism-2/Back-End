@@ -1,6 +1,6 @@
 const router = require('express').Router();
 
-const Values = require('./valuesModel.js');
+const Values = require('./valuesModel');
 
 router.get('/', (req, res) => {
 	Values.find()
@@ -11,22 +11,15 @@ router.get('/', (req, res) => {
 });
 
 // //todo 
-router.post('/', (req,res) =>{
-	console.log("req.body: ",req.body)
-	Values.add(req.body)
-	.then(value => {
-		console.log("value: ", value)
-        res.status(200).json(value)
-    })
-    .catch(error => {
-    	console.log(error);
-    	res.status(500).json({error: error.message});
-    })
-})
-
-//post to store what users' 3 values are
-router.post('/:id', (req,res) =>{
-
+router.post('/', (req, res) => {
+	const item = req.body
+	if(item.value) {
+		Values.add(req.body)
+			.then(newVal => {
+				res.status(201).json(newVal)
+			})
+			.catch(err => res.status(500).json({ errorMessage: `Internal server error`, err }))
+	}
 })
 
 router.put('/:id', (req,res) => {
