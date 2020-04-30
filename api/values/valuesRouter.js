@@ -10,6 +10,14 @@ router.get('/', (req, res) => {
 		.catch(err => res.send(err));
 });
 
+router.get('/:id', (req, res) => {
+	Values.findById(req.params.id)
+		.then(values => {
+			res.status(200).json(values);
+		})
+		.catch(err => res.send(err));
+});
+
 // //todo 
 router.post('/', (req, res) => {
 	const item = req.body
@@ -36,7 +44,6 @@ router.put('/:id', (req,res) => {
 
 router.delete('/:id', (req, res) => {
 	const { id } = req.params;
-  
 	Values.remove(id)
 	.then(deleted => {
 	  if (deleted) {

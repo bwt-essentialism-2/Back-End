@@ -10,6 +10,6 @@ exports.up = function(knex) {
 
 exports.down = function(knex) {
   return knex.schema.table('Essentials', tbl => {
-    tbl.dropColumn('project_status')
+    tbl.dropColumn('essential_status')
   })
 };

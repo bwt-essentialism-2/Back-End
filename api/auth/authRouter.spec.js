@@ -1,17 +1,21 @@
-process.env.DB_ENV = 'testing';
 const server = require('../server');
 const request = require('supertest');
-const db = require('../../database/dbConfig')
-const knex = require('knex');
+const knexFile = require('../../knexfile').testing;
+const knex = require('knex')(knexFile);
+const db = require('../../database/dbConfig');
+const knexCleaner = require('knex-cleaner');
 
 describe('/auth', () => {
-	describe('/register', () => {
-		beforeEach(() => {
-			knex(db['testing']).migrate.rollback()
-      .then(() => knex.migrate.latest())
-      .then(() => knex.seed.run())
-		});
 
+	beforeEach(async () => {
+		await knexCleaner.clean(knex, {
+			mode: 'truncate',
+			restartIdentity: true,
+			ignoreTables: ['knex_migrations', 'knex_migrations_lock']
+		});
+	});
+
+	describe('/register', () => {
 		test('should return a invalid register attempt', () => {
 			return request(server)
 				.post('/api/auth/register')
@@ -23,14 +27,35 @@ describe('/auth', () => {
 					);
 				});
 		});
-
 		test('should return a valid register attempt', () => {
+			const user = { username: 'Sanders', password: 'password' }
 			return request(server)
 				.post('/api/auth/register')
-				.send({ username: 'Billy', password: 'password' })
+				.send(user)
 				.then(res => {
 					expect(res.status).toBe(201);
-				});
+				})
 		});
 	});
+
+	describe('/login', () => {
+		const user = { username: 'Sanders', password: 'password' }
+		test('should login user', () => {
+			return request(server)
+				.post('/api/auth/register')
+				.send(user)
+				.then(res => {
+					expect(res.status).toBe(201)
+						.then(() => {
+							return request('server')
+								.post('/api/auth/login')
+								.send(user)
+								.then(res => {
+									expect(res.status).toBe(200)
+								})
+						})
+				})
+		})
+		
+	})
 });

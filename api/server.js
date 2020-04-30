@@ -24,6 +24,9 @@ server.use(express.json());
 // login and Registration
 server.use('/api/auth', authRouter);
 
+server.use('/', (req, res) => {
+  res.status(200).json({ message: 'Server is Live' })
+})
 
 // JWT required beyond here
 // process.env.DB_ENV === 'production' ? server.use(authentication) : null
@@ -34,9 +37,5 @@ server.use('/api/users', usersRouter);
 server.use('/api/values', valuesRouter);
 server.use('/api/projects', projectsRouter);
 server.use('/api/essentials', essentialsRouter);
-
-server.use('/', (req, res) => {
-  res.status(200).json({ message: 'Server is Live' })
-})
 
 module.exports = server;
