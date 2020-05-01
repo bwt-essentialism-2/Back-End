@@ -74,14 +74,5 @@ describe('Users', () => {
 					// expect(editedProj).toBeDefined()
 				})
 		});
-
-		// test('should Delete user project', () => {
-		// 	return request(server)
-		// 		.delete(`/api/users/projects/4`)
-		// 		.set({ Authorization: testUser.token })
-		// 		.then(res => {
-		// 			expect(res.status).toBe(201);
-		// 		});
-		// });
 	});
 });

@@ -1,5 +1,5 @@
-exports.seed = function (knex) {
-	return knex('Values')
+exports.seed = async function (knex) {
+	return await knex('Values')
 		.del()
 		.then(function () {
 			return knex('Values').insert([

@@ -1,6 +1,6 @@
 
-exports.seed = function(knex) {
-  return knex('Projects').del()
+exports.seed = async function(knex) {
+  return await knex('Projects').del()
     .then(function () {
       return knex('Projects').insert([
         {
