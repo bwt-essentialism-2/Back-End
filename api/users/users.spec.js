@@ -34,14 +34,12 @@ describe('Users', () => {
 	});
 
 	describe('User Projects', () => {
-		test('should return projects of user', () => {
-			return request(server)
+		test('should return projects of user', async () => {
+			const res = await request(server)
 				.get('/api/users/projects')
-				.set({ Authorization: testUser.token })
-				.then(res => {
-					expect(res.status).toBe(200);
-					expect(res.body).toHaveLength(3);
-				});
+				.set({ Authorization: testUser.token });
+			expect(res.status).toBe(200);
+			expect(res.body.length).toBeGreaterThan(1);
 		});
 
 		test('should Create a user project', async () => {
@@ -69,9 +67,49 @@ describe('Users', () => {
 					project_status: true
 				})
 				.then(res => {
-					expect(res.status).toBe(201);
+					expect(res.status).toBe(200);
 					// const editedProj = await db('Projects').where({ name: 'I was wrong hes too good' })
 					// expect(editedProj).toBeDefined()
+				})
+		});
+	});
+
+	describe('User Project Essentials', () => {
+		test('should return essentials of a project', async () => {
+			const res = await request(server)
+				.get('/api/users/projects/1/essentials')
+				.set({ Authorization: testUser.token });
+			expect(res.status).toBe(200);
+			// expect(res.body.length).toBeGreaterThan(1);
+		});
+
+		test('should Create a essentials', async () => {
+			await request(server)
+				.post('/api/users/projects/1/essentials')
+				.set({ Authorization: testUser.token })
+				.send({
+					name: 'lets make test todo stuff!',
+					description: 'desc are a waste of time',
+					project_status: false,
+				})
+				.then(res => {
+					expect(res.status).toBe(201);
+				})
+		});
+
+		test('should Edit a essential', async () => {
+			await request(server)
+				.post('/api/users/projects/1/essentials')
+				.set({ Authorization: testUser.token })
+				.send({
+					name: 'edit all my todos!',
+					description: 'haha it changed',
+					project_status: false,
+					user_id: 1,
+          project_id: 1
+				})
+				.then(res => {
+					expect(res.status).toBe(201);
 				})
 		});
 	});

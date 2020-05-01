@@ -17,7 +17,8 @@ const essentialExist = (req, res, next) => {
 
 const validateNewEssential = (req, res, next) => {
 	const item = req.body;
-	const { id, pid } = req.params;
+	const { pid } = req.params;
+	const { id } = req.user;
 	const essentialPrint = {
 		"name": "",
 		"description": "",

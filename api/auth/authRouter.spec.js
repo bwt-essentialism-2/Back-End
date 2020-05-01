@@ -27,9 +27,9 @@ describe('/auth', () => {
 					);
 				});
 		});
-		test('should return a valid register attempt', () => {
+		test('should return a valid register attempt', async () => {
 			const user = { username: 'Sanders', password: 'password' };
-			return request(server)
+			await request(server)
 				.post('/api/auth/register')
 				.send(user)
 				.then(res => {
@@ -39,22 +39,10 @@ describe('/auth', () => {
 	});
 
 	describe('/login', () => {
-		const user = { username: 'Billy', password: 'password' };
+		const user = { username: 'Test', password: 'Test' };
 		test('should login user', async () => {
-			await request(server)
-				.post('/api/auth/register')
-				.send(user)
-				.then(async res => {
-					expect(res.status).toBe(201);
-					try {
-						const res_1 = await request('server')
-							.post('/api/auth/login')
-							.send(user);
-						expect(res_1.status).toBe(200);
-					} catch (error) {
-						return null;
-					}
-				});
+			await request('server').post('/api/auth/login').send(user);
+			expect(res.status).toBe(200);
 		});
 	});
 });
