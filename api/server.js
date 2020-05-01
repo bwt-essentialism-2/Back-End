@@ -24,8 +24,6 @@ server.use(express.json());
 // login and Registration
 server.use('/api/auth', authRouter);
 
-
-
 // Endpoints
 server.use('/api/users', authentication, usersRouter);
 server.use('/api/values', authentication, valuesRouter);
