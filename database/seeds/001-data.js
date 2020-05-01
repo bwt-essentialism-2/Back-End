@@ -1,8 +1,8 @@
 const bcrypt = require('bcrypt');
 const rounds = process.env.HASH_COUNT || 10
 
-exports.seed = function (knex) {
-	return knex('Users')
+exports.seed = async function (knex) {
+	return await knex('Users')
 		.del()
 		.then(function () {
 			return knex('Users').insert([

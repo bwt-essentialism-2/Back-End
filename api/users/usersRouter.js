@@ -33,6 +33,14 @@ router.get('/projects', userware.verifyUser, (req, res) => {
 		.catch(err => res.status(500).json({ errorMessage: `Internal server error`, err }))
 })
 
+router.get('/projects/:pid', userware.verifyUser, projectware.projectExist, (req, res) => {
+  Projects.findById(req.project.id)
+    .then(projects => {
+      res.status(200).json(projects)
+		})
+		.catch(err => res.status(500).json({ errorMessage: `Internal server error`, err }))
+})
+
 // Creates projects by automatically taking in user ID
 router.post('/projects', userware.verifyUser, projectware.validateNewProject, (req, res) => {
 	res.status(201).json({ message: `Project was created successfully`})

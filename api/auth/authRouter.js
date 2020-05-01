@@ -18,14 +18,13 @@ router.post('/register', newUserVerification, (req, res) => {
     .catch(err => res.status(500).json({ errorMessage: `Internal server error`, err }))
 });
 
-router.post('/login', (req, res) => {
+router.post('/login', async (req, res) => {
   let { username, password } = req.body;
-  console.log('pinged')
-  Users.findBy({ username })
+  await Users.findBy({ username })
     .then(([user]) => {
       if (user && bcrypt.compareSync(password, user.password)) {
         const token = generateToken(user);
-        res.status(200).json({ message: "Welcome!", token });
+        res.status(200).json({ message: "Welcome!", username, token });
       } else {
         res.status(401).json({ message: "You cannot pass!" });
       }
@@ -38,11 +37,11 @@ router.post('/login', (req, res) => {
 
 module.exports = router;
 
-function newUserVerification(req, res, next) {
+async function newUserVerification(req, res, next) {
   const user = req.body;
 
   if((user.username && user.password) && (user.username.length > 3 && user.password.length > 5)) {
-    next()
+    await next()
   } else {
     res.status(401).json({ errorMessage: `Invalid attempt. username must contain atleast 3 characters & password must be more then 5` })
   }
